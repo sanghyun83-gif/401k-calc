@@ -23,6 +23,9 @@ export const metadata: Metadata = {
     description: "Calculate your 401k retirement savings. See contribution limits, employer matching, and projected growth.",
     type: "website",
   },
+  other: {
+    "google-site-verification": "qlPMVO_Hb-be3_hFHNT9SBbsHO-b_wCOfWfLmTb4EQc",
+  },
 };
 
 export default function RootLayout({
