@@ -1,96 +1,96 @@
 // ============================================
-// 401K-CALC SITE CONFIGURATION
-// 2025 401k Calculator
-// Purple/Wealth Theme
+// ANNUITY-CALC SITE CONFIGURATION
+// 2025 Annuity Calculator
+// Green/Growth Theme
 // ============================================
 
-import { Calculator, DollarSign, TrendingUp, Users, PiggyBank, ArrowDownCircle, Scale } from 'lucide-react';
+import { Calculator, DollarSign, TrendingUp, Clock, PiggyBank, ArrowDownCircle } from 'lucide-react';
 
 // ============================================
 // SITE METADATA
 // ============================================
 export const SITE = {
-    name: "401k Calculator",
-    tagline: "Free 2025 Retirement Calculator",
-    description: "Calculate your 401k retirement savings for free. See contribution limits, employer matching, Roth vs Traditional comparison, and projected growth.",
+    name: "Annuity Calculator",
+    tagline: "Free 2025 Annuity Calculator",
+    description: "Calculate your annuity payments, future value, and retirement income. Compare fixed, variable, and indexed annuities. Free 2025 annuity calculator.",
     year: 2025,
-    baseUrl: "https://401k.mysmartcalculators.com",
+    baseUrl: "https://annuity.mysmartcalculators.com",
 };
 
 // ============================================
-// 2025 401k CONSTANTS (IRS Official)
+// ANNUITY CONSTANTS
 // ============================================
-export const RETIREMENT_CONSTANTS = {
-    // 2025 Contribution Limits (IRS Notice 2024-80)
-    contributionLimits: {
-        employee: 23500,         // Employee elective deferral limit
-        catchUp: 7500,           // Standard catch-up (age 50-59, 64+)
-        superCatchUp: 11250,     // NEW 2025: Super catch-up (age 60-63)
-        total: 70000,            // Total annual additions limit (employee + employer)
-        compensationLimit: 350000, // Maximum compensation considered
+export const ANNUITY_CONSTANTS = {
+    // Annuity Types
+    annuityTypes: {
+        fixed: {
+            name: "Fixed Annuity",
+            avgRate: 5.5,
+            minRate: 4.0,
+            maxRate: 6.5,
+        },
+        variable: {
+            name: "Variable Annuity",
+            avgRate: 7.0,
+            minRate: -10,
+            maxRate: 15,
+        },
+        indexed: {
+            name: "Indexed Annuity",
+            avgRate: 6.0,
+            minRate: 0,
+            maxRate: 10,
+            participationRate: 0.80,
+            cap: 8,
+        },
     },
 
-    // Age thresholds
-    ageThresholds: {
-        catchUpAge: 50,          // When catch-up contributions begin
-        superCatchUpStart: 60,   // NEW 2025: Super catch-up starts
-        superCatchUpEnd: 63,     // Super catch-up ends
-        requiredMinDistribution: 73, // RMD age
+    // Payout Options
+    payoutOptions: {
+        lifeOnly: {
+            name: "Life Only",
+            description: "Highest payments, ends at death",
+            factor: 1.0,
+        },
+        lifePeriodCertain: {
+            name: "Life with Period Certain",
+            description: "Guaranteed minimum years",
+            factor: 0.92,
+        },
+        jointSurvivor: {
+            name: "Joint & Survivor",
+            description: "Continues for surviving spouse",
+            factor: 0.85,
+        },
     },
 
-    // Tax Brackets 2025 (for Roth vs Traditional comparison)
-    taxBrackets: {
-        single: [
-            { min: 0, max: 11925, rate: 0.10 },
-            { min: 11925, max: 48475, rate: 0.12 },
-            { min: 48475, max: 103350, rate: 0.22 },
-            { min: 103350, max: 197300, rate: 0.24 },
-            { min: 197300, max: 250525, rate: 0.32 },
-            { min: 250525, max: 626350, rate: 0.35 },
-            { min: 626350, max: Infinity, rate: 0.37 },
-        ],
-        marriedFilingJointly: [
-            { min: 0, max: 23850, rate: 0.10 },
-            { min: 23850, max: 96950, rate: 0.12 },
-            { min: 96950, max: 206700, rate: 0.22 },
-            { min: 206700, max: 394600, rate: 0.24 },
-            { min: 394600, max: 501050, rate: 0.32 },
-            { min: 501050, max: 751600, rate: 0.35 },
-            { min: 751600, max: Infinity, rate: 0.37 },
-        ],
+    // IRS Rules
+    irsRules: {
+        earlyWithdrawalAge: 59.5,
+        earlyWithdrawalPenalty: 0.10,
+        requiredMinDistributionAge: 73,
+        exclusionRatio: true,
     },
 
-    // Average employer match data
-    employerMatch: {
-        averageMatchPercent: 4.5,    // Average employer matches 4.5%
-        averageMatchLimit: 6,         // Up to 6% of salary
-        vestingYears: 4,              // Average vesting period
+    // Surrender Charges (typical)
+    surrenderCharges: {
+        year1: 7,
+        year2: 6,
+        year3: 5,
+        year4: 4,
+        year5: 3,
+        year6: 2,
+        year7: 1,
+        year8: 0,
     },
 
-    // Investment assumptions
-    investmentDefaults: {
-        annualReturn: 7,              // Historical average S&P 500
-        inflationRate: 3,             // Average inflation
-        retirementAge: 65,
-        lifeExpectancy: 90,
-    },
-
-    // Early withdrawal
-    earlyWithdrawal: {
-        penaltyRate: 0.10,            // 10% penalty before 59.5
-        penaltyFreeAge: 59.5,
-        ruleOf55Age: 55,              // Rule of 55 exception
-    },
-
-    // Defaults for inputs
+    // Default values
     defaults: {
-        currentAge: 30,
-        salary: 75000,
-        contributionPercent: 10,
-        currentBalance: 50000,
-        employerMatchPercent: 4,
-        employerMatchLimit: 6,
-        expectedReturn: 7,
+        principal: 100000,
+        interestRate: 5.5,
+        years: 20,
+        paymentFrequency: 12,
+        currentAge: 60,
         retirementAge: 65,
     },
 };
@@ -101,392 +101,306 @@ export const RETIREMENT_CONSTANTS = {
 export const CALCULATORS = [
     {
         id: "calculator",
-        name: "401k Calculator",
+        name: "Annuity Calculator",
         shortName: "Calculator",
-        description: "Calculate your retirement savings",
-        longDescription: "See how much your 401k will grow by retirement based on contributions and returns.",
+        description: "Calculate annuity payments and value",
+        longDescription: "Calculate your annuity future value, monthly payments, and total payout over time.",
         icon: Calculator,
         category: "retirement",
-        keywords: ["401k calculator", "retirement calculator", "401k growth"],
+        keywords: ["annuity calculator", "annuity payment", "annuity value"],
         featured: true,
     },
     {
-        id: "limits",
-        name: "Contribution Limits",
-        shortName: "Limits",
-        description: "2025 401k contribution limits",
-        longDescription: "See the official IRS 401k contribution limits for 2025.",
+        id: "payout",
+        name: "Payout Calculator",
+        shortName: "Payout",
+        description: "Calculate annuity income payments",
+        longDescription: "See how much monthly income your annuity will provide based on your principal and payout option.",
         icon: DollarSign,
         category: "retirement",
-        keywords: ["401k limits 2025", "contribution limits", "max 401k"],
+        keywords: ["annuity payout", "annuity income", "monthly annuity payment"],
         featured: true,
     },
     {
-        id: "employer-match",
-        name: "Employer Match",
-        shortName: "Match",
-        description: "Calculate your employer matching",
-        longDescription: "See how much free money you're getting from employer match.",
-        icon: Users,
-        category: "retirement",
-        keywords: ["employer match calculator", "401k match", "company match"],
-        featured: true,
-    },
-    {
-        id: "roth-vs-traditional",
-        name: "Roth vs Traditional",
-        shortName: "Roth vs Trad",
-        description: "Compare Roth and Traditional 401k",
-        longDescription: "Should you contribute to Roth or Traditional 401k? Compare tax impacts.",
-        icon: Scale,
-        category: "retirement",
-        keywords: ["roth vs traditional", "roth 401k", "pre-tax vs after-tax"],
-        featured: true,
-    },
-    {
-        id: "catch-up",
-        name: "Catch-Up Calculator",
-        shortName: "Catch-Up",
-        description: "50+ catch-up contributions",
-        longDescription: "Calculate extra contributions allowed for ages 50 and older.",
+        id: "growth",
+        name: "Growth Calculator",
+        shortName: "Growth",
+        description: "Project annuity growth over time",
+        longDescription: "See how your annuity will grow during the accumulation phase with compound interest.",
         icon: TrendingUp,
         category: "retirement",
-        keywords: ["catch up contribution", "over 50 401k", "super catch up"],
+        keywords: ["annuity growth", "deferred annuity", "annuity accumulation"],
+        featured: true,
+    },
+    {
+        id: "comparison",
+        name: "Annuity Comparison",
+        shortName: "Compare",
+        description: "Compare fixed vs variable annuities",
+        longDescription: "Compare different annuity types to find the best option for your retirement goals.",
+        icon: PiggyBank,
+        category: "retirement",
+        keywords: ["fixed vs variable annuity", "annuity comparison", "best annuity"],
+        featured: true,
+    },
+    {
+        id: "surrender",
+        name: "Surrender Calculator",
+        shortName: "Surrender",
+        description: "Calculate surrender charges",
+        longDescription: "See the surrender charges if you withdraw early from your annuity contract.",
+        icon: ArrowDownCircle,
+        category: "retirement",
+        keywords: ["annuity surrender charge", "early withdrawal annuity", "annuity penalty"],
         featured: false,
     },
     {
-        id: "withdrawal",
-        name: "Withdrawal Calculator",
-        shortName: "Withdrawal",
-        description: "Calculate 401k withdrawals",
-        longDescription: "See taxes and penalties on 401k withdrawals at any age.",
-        icon: ArrowDownCircle,
+        id: "timeline",
+        name: "Payment Timeline",
+        shortName: "Timeline",
+        description: "View payment schedule",
+        longDescription: "See your complete annuity payment schedule year by year.",
+        icon: Clock,
         category: "retirement",
-        keywords: ["401k withdrawal", "early withdrawal penalty", "401k distribution"],
+        keywords: ["annuity schedule", "annuity timeline", "payment schedule"],
         featured: false,
     },
 ] as const;
 
 // ============================================
-// 401K GROWTH CALCULATION
+// ANNUITY CALCULATIONS
 // ============================================
 
-export interface RetirementResult {
-    currentAge: number;
-    retirementAge: number;
-    yearsToRetirement: number;
-    currentBalance: number;
-    annualContribution: number;
-    employerMatch: number;
-    totalAnnualAddition: number;
-    projectedBalance: number;
-    totalContributions: number;
-    totalEmployerMatch: number;
-    totalGrowth: number;
+export interface AnnuityResult {
+    principal: number;
+    interestRate: number;
+    years: number;
+    futureValue: number;
+    totalInterest: number;
+    monthlyPayment: number;
+    totalPayments: number;
+}
+
+export function calculateAnnuity(
+    principal: number,
+    interestRate: number,
+    years: number,
+    isImmediate: boolean = false
+): AnnuityResult {
+    const rate = interestRate / 100;
+    const monthlyRate = rate / 12;
+    const months = years * 12;
+
+    // Future Value (accumulation phase)
+    const futureValue = principal * Math.pow(1 + rate, years);
+    const totalInterest = futureValue - principal;
+
+    // Monthly payment (payout phase)
+    let monthlyPayment: number;
+    if (isImmediate) {
+        // Immediate annuity - start paying now
+        monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) /
+            (Math.pow(1 + monthlyRate, months) - 1);
+    } else {
+        // Deferred annuity - payout after accumulation
+        monthlyPayment = futureValue * (monthlyRate * Math.pow(1 + monthlyRate, months)) /
+            (Math.pow(1 + monthlyRate, months) - 1);
+    }
+
+    return {
+        principal,
+        interestRate,
+        years,
+        futureValue: Math.round(futureValue),
+        totalInterest: Math.round(totalInterest),
+        monthlyPayment: Math.round(monthlyPayment),
+        totalPayments: Math.round(monthlyPayment * months),
+    };
+}
+
+// ============================================
+// PAYOUT CALCULATION
+// ============================================
+
+export interface PayoutResult {
+    principal: number;
+    monthlyPayment: number;
+    yearlyPayment: number;
+    payoutYears: number;
+    totalPayout: number;
+    payoutType: string;
+}
+
+export function calculatePayout(
+    principal: number,
+    interestRate: number,
+    payoutYears: number,
+    payoutType: 'lifeOnly' | 'lifePeriodCertain' | 'jointSurvivor' = 'lifeOnly'
+): PayoutResult {
+    const { payoutOptions } = ANNUITY_CONSTANTS;
+    const factor = payoutOptions[payoutType].factor;
+
+    const monthlyRate = interestRate / 100 / 12;
+    const months = payoutYears * 12;
+
+    const basePayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) /
+        (Math.pow(1 + monthlyRate, months) - 1);
+
+    const monthlyPayment = basePayment * factor;
+
+    return {
+        principal,
+        monthlyPayment: Math.round(monthlyPayment),
+        yearlyPayment: Math.round(monthlyPayment * 12),
+        payoutYears,
+        totalPayout: Math.round(monthlyPayment * months),
+        payoutType: payoutOptions[payoutType].name,
+    };
+}
+
+// ============================================
+// GROWTH PROJECTION
+// ============================================
+
+export interface GrowthResult {
+    principal: number;
+    years: number;
+    interestRate: number;
     yearByYearData: YearlyData[];
+    finalBalance: number;
+    totalGrowth: number;
 }
 
 export interface YearlyData {
-    age: number;
     year: number;
-    contribution: number;
-    employerMatch: number;
-    growth: number;
-    balance: number;
+    startBalance: number;
+    interest: number;
+    endBalance: number;
 }
 
-export function calculate401kGrowth(
-    currentAge: number,
-    salary: number,
-    contributionPercent: number,
-    currentBalance: number,
-    employerMatchPercent: number,
-    employerMatchLimit: number,
-    expectedReturn: number,
-    retirementAge: number
-): RetirementResult {
-    const yearsToRetirement = retirementAge - currentAge;
-    const monthlyReturn = expectedReturn / 100 / 12;
-    const { contributionLimits, ageThresholds } = RETIREMENT_CONSTANTS;
-
-    let balance = currentBalance;
-    let totalContributions = 0;
-    let totalEmployerMatch = 0;
+export function calculateGrowth(
+    principal: number,
+    interestRate: number,
+    years: number
+): GrowthResult {
+    const rate = interestRate / 100;
     const yearByYearData: YearlyData[] = [];
-    const currentYear = new Date().getFullYear();
+    let balance = principal;
 
-    for (let i = 0; i < yearsToRetirement; i++) {
-        const age = currentAge + i;
-        const year = currentYear + i;
-
-        // Calculate annual contribution (capped at IRS limit)
-        let maxContribution = contributionLimits.employee;
-
-        // Add catch-up if eligible
-        if (age >= ageThresholds.superCatchUpStart && age <= ageThresholds.superCatchUpEnd) {
-            maxContribution += contributionLimits.superCatchUp; // 2025 super catch-up
-        } else if (age >= ageThresholds.catchUpAge) {
-            maxContribution += contributionLimits.catchUp;
-        }
-
-        const desiredContribution = salary * (contributionPercent / 100);
-        const annualContribution = Math.min(desiredContribution, maxContribution);
-
-        // Calculate employer match
-        const matchableAmount = salary * (employerMatchLimit / 100);
-        const actualMatchable = Math.min(annualContribution, matchableAmount);
-        const employerMatch = actualMatchable * (employerMatchPercent / employerMatchLimit);
-
-        // Monthly compounding for the year
-        const monthlyContribution = (annualContribution + employerMatch) / 12;
-        let yearStartBalance = balance;
-
-        for (let month = 0; month < 12; month++) {
-            balance = balance * (1 + monthlyReturn) + monthlyContribution;
-        }
-
-        const yearGrowth = balance - yearStartBalance - annualContribution - employerMatch;
-
-        totalContributions += annualContribution;
-        totalEmployerMatch += employerMatch;
+    for (let i = 1; i <= years; i++) {
+        const startBalance = balance;
+        const interest = balance * rate;
+        balance = balance + interest;
 
         yearByYearData.push({
-            age,
-            year,
-            contribution: Math.round(annualContribution),
-            employerMatch: Math.round(employerMatch),
-            growth: Math.round(yearGrowth),
-            balance: Math.round(balance),
+            year: i,
+            startBalance: Math.round(startBalance),
+            interest: Math.round(interest),
+            endBalance: Math.round(balance),
         });
     }
 
-    const totalGrowth = balance - currentBalance - totalContributions - totalEmployerMatch;
-
     return {
-        currentAge,
-        retirementAge,
-        yearsToRetirement,
-        currentBalance,
-        annualContribution: Math.round(salary * (contributionPercent / 100)),
-        employerMatch: Math.round((salary * (employerMatchLimit / 100)) * (employerMatchPercent / employerMatchLimit)),
-        totalAnnualAddition: Math.round(salary * (contributionPercent / 100) + (salary * (employerMatchLimit / 100)) * (employerMatchPercent / employerMatchLimit)),
-        projectedBalance: Math.round(balance),
-        totalContributions: Math.round(totalContributions),
-        totalEmployerMatch: Math.round(totalEmployerMatch),
-        totalGrowth: Math.round(totalGrowth),
+        principal,
+        years,
+        interestRate,
         yearByYearData,
+        finalBalance: Math.round(balance),
+        totalGrowth: Math.round(balance - principal),
     };
 }
 
 // ============================================
-// EMPLOYER MATCH CALCULATION
+// SURRENDER CHARGE CALCULATION
 // ============================================
 
-export interface EmployerMatchResult {
-    salary: number;
-    contributionPercent: number;
-    employerMatchPercent: number;
-    employerMatchLimit: number;
-    yourContribution: number;
-    employerMatch: number;
-    totalAnnual: number;
-    freeMoneyPercent: number;
-    isMaxingMatch: boolean;
+export interface SurrenderResult {
+    principal: number;
+    currentValue: number;
+    yearsHeld: number;
+    surrenderChargePercent: number;
+    surrenderCharge: number;
+    netValue: number;
+    earlyWithdrawalPenalty: number;
+    totalDeductions: number;
 }
 
-export function calculateEmployerMatch(
-    salary: number,
-    contributionPercent: number,
-    employerMatchPercent: number,
-    employerMatchLimit: number
-): EmployerMatchResult {
-    const yourContribution = salary * (contributionPercent / 100);
+export function calculateSurrender(
+    principal: number,
+    currentValue: number,
+    yearsHeld: number,
+    age: number
+): SurrenderResult {
+    const { surrenderCharges, irsRules } = ANNUITY_CONSTANTS;
 
-    // Employer matches up to employerMatchLimit% of salary
-    const matchableAmount = salary * (employerMatchLimit / 100);
-    const actualMatchable = Math.min(yourContribution, matchableAmount);
-    const employerMatch = actualMatchable * (employerMatchPercent / employerMatchLimit);
+    // Get surrender charge based on years held
+    const yearKey = `year${Math.min(yearsHeld, 8)}` as keyof typeof surrenderCharges;
+    const surrenderChargePercent = surrenderCharges[yearKey] || 0;
+    const surrenderCharge = currentValue * (surrenderChargePercent / 100);
 
-    const freeMoneyPercent = salary > 0 ? (employerMatch / salary) * 100 : 0;
-    const isMaxingMatch = contributionPercent >= employerMatchLimit;
+    // Early withdrawal penalty from IRS
+    const earlyWithdrawalPenalty = age < irsRules.earlyWithdrawalAge
+        ? (currentValue - principal) * irsRules.earlyWithdrawalPenalty
+        : 0;
+
+    const totalDeductions = surrenderCharge + earlyWithdrawalPenalty;
+    const netValue = currentValue - totalDeductions;
 
     return {
-        salary,
-        contributionPercent,
-        employerMatchPercent,
-        employerMatchLimit,
-        yourContribution: Math.round(yourContribution),
-        employerMatch: Math.round(employerMatch),
-        totalAnnual: Math.round(yourContribution + employerMatch),
-        freeMoneyPercent: Math.round(freeMoneyPercent * 10) / 10,
-        isMaxingMatch,
+        principal,
+        currentValue,
+        yearsHeld,
+        surrenderChargePercent,
+        surrenderCharge: Math.round(surrenderCharge),
+        netValue: Math.round(netValue),
+        earlyWithdrawalPenalty: Math.round(earlyWithdrawalPenalty),
+        totalDeductions: Math.round(totalDeductions),
     };
 }
 
 // ============================================
-// ROTH VS TRADITIONAL COMPARISON
+// COMPARISON CALCULATION
 // ============================================
 
-export interface RothVsTraditionalResult {
-    traditionalBalance: number;
-    rothBalance: number;
-    traditionalAfterTax: number;
-    rothAfterTax: number; // Same as rothBalance (already taxed)
-    taxSavingsNow: number;
-    taxInRetirement: number;
-    betterOption: 'roth' | 'traditional' | 'same';
-    difference: number;
+export interface ComparisonResult {
+    fixed: { futureValue: number; monthlyPayout: number };
+    variable: { futureValue: number; monthlyPayout: number; risk: string };
+    indexed: { futureValue: number; monthlyPayout: number };
+    bestForSafety: string;
+    bestForGrowth: string;
 }
 
-export function compareRothVsTraditional(
-    annualContribution: number,
-    yearsToRetirement: number,
-    expectedReturn: number,
-    currentTaxRate: number,
-    retirementTaxRate: number
-): RothVsTraditionalResult {
-    // Traditional: Contribute pre-tax, pay tax on withdrawal
-    // Roth: Contribute after-tax, withdraw tax-free
+export function compareAnnuities(
+    principal: number,
+    years: number,
+    payoutYears: number
+): ComparisonResult {
+    const { annuityTypes } = ANNUITY_CONSTANTS;
 
-    const monthlyReturn = expectedReturn / 100 / 12;
-    const monthlyContribution = annualContribution / 12;
+    const fixedResult = calculateAnnuity(principal, annuityTypes.fixed.avgRate, years);
+    const variableResult = calculateAnnuity(principal, annuityTypes.variable.avgRate, years);
+    const indexedResult = calculateAnnuity(principal, annuityTypes.indexed.avgRate, years);
 
-    // Calculate future value
-    let balance = 0;
-    for (let month = 0; month < yearsToRetirement * 12; month++) {
-        balance = balance * (1 + monthlyReturn) + monthlyContribution;
-    }
-
-    const traditionalBalance = balance;
-    const traditionalAfterTax = balance * (1 - retirementTaxRate / 100);
-
-    // Roth: Less contribution (after-tax), but grows tax-free
-    const rothContribution = annualContribution * (1 - currentTaxRate / 100);
-    const monthlyRothContribution = rothContribution / 12;
-
-    let rothBalance = 0;
-    for (let month = 0; month < yearsToRetirement * 12; month++) {
-        rothBalance = rothBalance * (1 + monthlyReturn) + monthlyRothContribution;
-    }
-
-    const taxSavingsNow = annualContribution * (currentTaxRate / 100) * yearsToRetirement;
-    const taxInRetirement = traditionalBalance * (retirementTaxRate / 100);
-
-    const difference = rothBalance - traditionalAfterTax;
-    let betterOption: 'roth' | 'traditional' | 'same' = 'same';
-    if (difference > 1000) betterOption = 'roth';
-    else if (difference < -1000) betterOption = 'traditional';
+    const fixedPayout = calculatePayout(fixedResult.futureValue, annuityTypes.fixed.avgRate, payoutYears);
+    const variablePayout = calculatePayout(variableResult.futureValue, annuityTypes.variable.avgRate, payoutYears);
+    const indexedPayout = calculatePayout(indexedResult.futureValue, annuityTypes.indexed.avgRate, payoutYears);
 
     return {
-        traditionalBalance: Math.round(traditionalBalance),
-        rothBalance: Math.round(rothBalance),
-        traditionalAfterTax: Math.round(traditionalAfterTax),
-        rothAfterTax: Math.round(rothBalance), // Already taxed
-        taxSavingsNow: Math.round(taxSavingsNow),
-        taxInRetirement: Math.round(taxInRetirement),
-        betterOption,
-        difference: Math.round(Math.abs(difference)),
-    };
-}
-
-// ============================================
-// WITHDRAWAL CALCULATION
-// ============================================
-
-export interface WithdrawalResult {
-    withdrawalAmount: number;
-    age: number;
-    federalTax: number;
-    stateTax: number;
-    earlyPenalty: number;
-    totalTaxes: number;
-    netAmount: number;
-    effectiveTaxRate: number;
-    isEarlyWithdrawal: boolean;
-}
-
-export function calculateWithdrawal(
-    withdrawalAmount: number,
-    age: number,
-    federalTaxRate: number,
-    stateTaxRate: number = 0
-): WithdrawalResult {
-    const { earlyWithdrawal } = RETIREMENT_CONSTANTS;
-    const isEarlyWithdrawal = age < earlyWithdrawal.penaltyFreeAge;
-
-    const federalTax = withdrawalAmount * (federalTaxRate / 100);
-    const stateTax = withdrawalAmount * (stateTaxRate / 100);
-    const earlyPenalty = isEarlyWithdrawal ? withdrawalAmount * earlyWithdrawal.penaltyRate : 0;
-
-    const totalTaxes = federalTax + stateTax + earlyPenalty;
-    const netAmount = withdrawalAmount - totalTaxes;
-    const effectiveTaxRate = (totalTaxes / withdrawalAmount) * 100;
-
-    return {
-        withdrawalAmount,
-        age,
-        federalTax: Math.round(federalTax),
-        stateTax: Math.round(stateTax),
-        earlyPenalty: Math.round(earlyPenalty),
-        totalTaxes: Math.round(totalTaxes),
-        netAmount: Math.round(netAmount),
-        effectiveTaxRate: Math.round(effectiveTaxRate * 10) / 10,
-        isEarlyWithdrawal,
-    };
-}
-
-// ============================================
-// CATCH-UP CONTRIBUTION CALCULATION
-// ============================================
-
-export interface CatchUpResult {
-    age: number;
-    baseLimit: number;
-    catchUpAmount: number;
-    totalLimit: number;
-    isSuperCatchUp: boolean;
-    additionalSavings: number;
-    projectedGrowth: number;
-}
-
-export function calculateCatchUp(
-    age: number,
-    yearsToRetirement: number,
-    expectedReturn: number
-): CatchUpResult {
-    const { contributionLimits, ageThresholds } = RETIREMENT_CONSTANTS;
-
-    const baseLimit = contributionLimits.employee;
-    let catchUpAmount = 0;
-    let isSuperCatchUp = false;
-
-    if (age >= ageThresholds.superCatchUpStart && age <= ageThresholds.superCatchUpEnd) {
-        catchUpAmount = contributionLimits.superCatchUp;
-        isSuperCatchUp = true;
-    } else if (age >= ageThresholds.catchUpAge) {
-        catchUpAmount = contributionLimits.catchUp;
-    }
-
-    const totalLimit = baseLimit + catchUpAmount;
-    const additionalSavings = catchUpAmount * yearsToRetirement;
-
-    // Calculate projected growth of catch-up contributions
-    const monthlyReturn = expectedReturn / 100 / 12;
-    const monthlyCatchUp = catchUpAmount / 12;
-    let projectedGrowth = 0;
-
-    for (let month = 0; month < yearsToRetirement * 12; month++) {
-        projectedGrowth = projectedGrowth * (1 + monthlyReturn) + monthlyCatchUp;
-    }
-
-    return {
-        age,
-        baseLimit,
-        catchUpAmount,
-        totalLimit,
-        isSuperCatchUp,
-        additionalSavings,
-        projectedGrowth: Math.round(projectedGrowth),
+        fixed: {
+            futureValue: fixedResult.futureValue,
+            monthlyPayout: fixedPayout.monthlyPayment,
+        },
+        variable: {
+            futureValue: variableResult.futureValue,
+            monthlyPayout: variablePayout.monthlyPayment,
+            risk: "High - returns can vary significantly",
+        },
+        indexed: {
+            futureValue: indexedResult.futureValue,
+            monthlyPayout: indexedPayout.monthlyPayment,
+        },
+        bestForSafety: "Fixed Annuity",
+        bestForGrowth: "Variable Annuity",
     };
 }
 
