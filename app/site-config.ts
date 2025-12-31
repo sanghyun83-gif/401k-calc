@@ -14,7 +14,7 @@ export const SITE = {
     tagline: "Free 2025 Retirement Calculator",
     description: "Calculate your 401k retirement savings for free. See contribution limits, employer matching, Roth vs Traditional comparison, and projected growth.",
     year: 2025,
-    baseUrl: "https://401k-calc.vercel.app",
+    baseUrl: "https://401k.mysmartcalculators.com",
 };
 
 // ============================================
@@ -221,7 +221,7 @@ export function calculate401kGrowth(
 
         // Calculate annual contribution (capped at IRS limit)
         let maxContribution = contributionLimits.employee;
-        
+
         // Add catch-up if eligible
         if (age >= ageThresholds.superCatchUpStart && age <= ageThresholds.superCatchUpEnd) {
             maxContribution += contributionLimits.superCatchUp; // 2025 super catch-up
@@ -301,7 +301,7 @@ export function calculateEmployerMatch(
     employerMatchLimit: number
 ): EmployerMatchResult {
     const yourContribution = salary * (contributionPercent / 100);
-    
+
     // Employer matches up to employerMatchLimit% of salary
     const matchableAmount = salary * (employerMatchLimit / 100);
     const actualMatchable = Math.min(yourContribution, matchableAmount);
@@ -363,7 +363,7 @@ export function compareRothVsTraditional(
     // Roth: Less contribution (after-tax), but grows tax-free
     const rothContribution = annualContribution * (1 - currentTaxRate / 100);
     const monthlyRothContribution = rothContribution / 12;
-    
+
     let rothBalance = 0;
     for (let month = 0; month < yearsToRetirement * 12; month++) {
         rothBalance = rothBalance * (1 + monthlyReturn) + monthlyRothContribution;
@@ -455,7 +455,7 @@ export function calculateCatchUp(
     expectedReturn: number
 ): CatchUpResult {
     const { contributionLimits, ageThresholds } = RETIREMENT_CONSTANTS;
-    
+
     const baseLimit = contributionLimits.employee;
     let catchUpAmount = 0;
     let isSuperCatchUp = false;
@@ -474,7 +474,7 @@ export function calculateCatchUp(
     const monthlyReturn = expectedReturn / 100 / 12;
     const monthlyCatchUp = catchUpAmount / 12;
     let projectedGrowth = 0;
-    
+
     for (let month = 0; month < yearsToRetirement * 12; month++) {
         projectedGrowth = projectedGrowth * (1 + monthlyReturn) + monthlyCatchUp;
     }
